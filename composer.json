@@ -1,0 +1,16 @@
+{
+  "require": {
+    "pda/pheanstalk": "^4.0",
+    "doctrine/orm": "^3",
+    "doctrine/dbal": "^4",
+    "symfony/cache": "^7",
+    "psr/event-dispatcher": "^1.0",
+    "ramsey/uuid": "^3.0",
+    "ramsey/uuid-doctrine": "^2"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

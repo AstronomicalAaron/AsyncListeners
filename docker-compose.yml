@@ -1,0 +1,39 @@
+services:
+  php:
+    build: .
+    image: async_listeners:latest
+    container_name: php
+    volumes:
+      - ./src:/var/www/html/src
+      - ./bootstrap.php:/var/www/html/bootstrap.php
+      - ./worker.php:/var/www/html/worker.php
+      - ./index.php:/var/www/html/index.php
+      - ./vendor:/var/www/html/vendor
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+      - queue
+
+  mysql:
+    image: mysql:8.0
+    container_name: database
+    environment:
+      MYSQL_ROOT_PASSWORD: dbpass123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  queue:
+    image: schickling/beanstalkd
+    container_name: queue
+    command: beanstalkd -b /var/lib/beanstalkd
+    volumes:
+      - beanstalkd_data:/var/lib/beanstalkd
+    ports:
+      - "11300:11300"
+
+volumes:
+  mysql_data:
+  beanstalkd_data:
